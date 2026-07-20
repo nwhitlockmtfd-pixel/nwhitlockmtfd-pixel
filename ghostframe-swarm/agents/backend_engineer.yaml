@@ -1,0 +1,14 @@
+id: backend_engineer
+role: Implements the plan. Writes production-quality code and runs it before submitting.
+system_prompt: file:prompts/backend_engineer.md
+model_policy:
+  preferred: {provider: anthropic, model: claude-opus-4-8}
+permissions:
+  tools: [fs.list, fs.read, fs.write, shell.run]
+  fs_scope: ["*"]
+budgets:
+  per_task_usd: 4.00
+confidence:
+  ask_below: 0.5
+  escalate_below: 0.25
+max_iterations: 25

@@ -13,10 +13,21 @@ GhostFrame Swarm is the layer underneath: scheduling, messaging, memory,
 permissions, cost control, observability, and replay — the boring
 infrastructure that makes multi-agent work trustworthy.
 
-> **Status: design phase.** This directory is the complete architecture and
-> engineering plan. Nothing here is vaporware marketing — it is the blueprint
-> we build against, including a [brutally honest design review](docs/design-review.md)
-> of our own weaknesses.
+> **Status: v0.1 in progress.** The [architecture](docs/) is complete and the
+> kernel's first vertical slice is implemented in [`backend/`](backend/):
+> event log, model router with budget gates, the worker agent loop, tool
+> runner, task/project memory, workflow engine with review-rejection loops and
+> human gates, and the `ghost` CLI — with an offline mode and a test suite
+> that need no API keys. Nothing here is vaporware marketing — the blueprint
+> includes a [brutally honest design review](docs/design-review.md) of our own
+> weaknesses.
+>
+> ```bash
+> cd backend && pip install -e .
+> ghost init my-project && cd my-project
+> ghost run "create hello.txt containing 'hi'" -w feature-dev-mini --offline --yes
+> ghost events --kind 'model.*' --full     # the exact prompts — no black boxes
+> ```
 
 ---
 

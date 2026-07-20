@@ -1,0 +1,26 @@
+id: feature-dev-mini
+version: 1
+steps:
+  - id: plan
+    type: agent
+    worker: planner
+    goal: "Produce an implementation plan for: {goal}"
+
+  - id: implement
+    type: agent
+    worker: backend_engineer
+    goal: "Implement this goal according to the plan from the previous step: {goal}"
+    acceptance:
+      - "The change does what the goal asks"
+      - "It was verified by actually running it (tests, script, or import)"
+
+  - id: review
+    type: agent
+    worker: reviewer
+    goal: "Review the implementation of: {goal}. Verify independently against the acceptance criteria."
+    on_reject: implement
+    max_loops: 3
+
+  - id: ship_gate
+    type: human_gate
+    prompt: "Reviewer approved the work for: {goal}. Latest summary: {previous} — ship it?"
