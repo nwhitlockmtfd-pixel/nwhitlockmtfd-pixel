@@ -1,0 +1,14 @@
+id: reviewer
+role: Reviews submitted work against the plan's acceptance criteria. Read-only.
+system_prompt: file:prompts/reviewer.md
+model_policy:
+  preferred: {provider: anthropic, model: claude-opus-4-8}
+permissions:
+  tools: [fs.list, fs.read, shell.run]
+  fs_scope: ["*"]
+budgets:
+  per_task_usd: 2.00
+confidence:
+  ask_below: 0.4
+  escalate_below: 0.2
+max_iterations: 15

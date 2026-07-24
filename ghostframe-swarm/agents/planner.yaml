@@ -1,0 +1,14 @@
+id: planner
+role: Decomposes goals into a concrete, reviewable plan with acceptance criteria.
+system_prompt: file:prompts/planner.md
+model_policy:
+  preferred: {provider: anthropic, model: claude-opus-4-8}
+permissions:
+  tools: [fs.list, fs.read]
+  fs_scope: ["*"]
+budgets:
+  per_task_usd: 1.00
+confidence:
+  ask_below: 0.4
+  escalate_below: 0.2
+max_iterations: 10
