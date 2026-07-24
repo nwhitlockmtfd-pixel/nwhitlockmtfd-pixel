@@ -3,55 +3,53 @@
 
 I'm a fire chief and a small-business owner. I've commanded emergency scenes,
 run crews, and drowned in the paperwork both jobs create — so I started
-building AI tools to fix it. My first one is now a live product running my
-company's back office every day. Now I build custom AI tools and automation
-for businesses in **any** industry. If your work creates paperwork, phone
-tag, or busywork, I can probably automate it.
+building AI tools to fix it. Everything below is real and live. Click it.
+
+**🌐 Home base: [ghostframetech.com](https://www.ghostframetech.com)**
 
 ---
 
-## 🏠 Flagship: Ghostframe RoofOps (live in production)
+## 🏠 Ghostframe RoofOps — live SaaS
+**[ghostframeroofops.com](https://ghostframeroofops.com)** — the AI back office
+for roofing contractors. Photos + field notes in → AI-drafted inspection
+reports, adjuster emails, and branded PDFs out. Multi-tenant accounts, Stripe
+subscriptions, automated lifecycle emails.
+**Stack:** Next.js · TypeScript · Supabase · Claude API · Stripe · Vercel
 
-**[ghostframeroofops.com](https://ghostframeroofops.com)** — the AI back
-office for roofing contractors. A real shipped product with real users.
+## 🤖 Ghostframe Scout — live AI agent
+**[scout.ghostframetech.com](https://scout.ghostframetech.com)** — point it at
+any company and watch an AI agent research it in real time: live web searches,
+site reads, and a ready-to-send lead briefing built in front of you. Try it.
+**Stack:** Claude agentic tool use (web search + fetch) · streaming SSE · Vercel
 
-- Job-site photos + field notes in → AI-drafted inspection reports, repair
-  scopes, and insurance-adjuster emails out, exported as branded PDFs
-- Guided roof-type inspection checklists, secure report links for homeowners
-  and adjusters
-- Multi-tenant accounts, subscriptions, free trials, automated lifecycle emails
-- **Stack:** Next.js + TypeScript, Supabase (Postgres/Auth/Storage), Anthropic
-  Claude API, Stripe, Resend, Vercel
+## 🏗️ TopDownPR.com — live business website
+**[topdownpr.com](https://www.topdownpr.com)** — the complete lead-generation
+site for my own roofing company. 25 pages, local-SEO city pages, inspection
+form with photo uploads delivering leads straight to the inbox.
 
-*Product code is private — happy to walk through it on a call.*
-
-## 🚒 Demo: Incident Report AI (open source)
-
+## 🚒 Incident Report AI — open source
 **[incident-report-ai](https://github.com/nwhitlockmtfd-pixel/incident-report-ai)**
-— messy fireground notes in, professional incident report narrative out.
-Built from my fire service side: nobody wants to write the report after a
-2 AM structure fire. Shows the same AI document-drafting pattern applied to
-a completely different industry — because the pattern works anywhere.
+— fireground notes in, professional incident narrative out. From my fire
+service life: the AI drafts, the officer approves. Readable on purpose.
+
+## 📈 GhostFrame Trader — in the lab
+**[ghostframe-trader](https://github.com/nwhitlockmtfd-pixel/ghostframe-trader)**
+— an AI-assisted algorithmic trading platform engineered for explainability
+and capital preservation: a hard risk-engine gate the AI can never override,
+every decision logged, paper money only while it proves itself.
+**Stack:** Python · FastAPI · PostgreSQL · Redis · Claude analysis · Docker
 
 ---
 
-## 🔧 What I build
-
-- **Document automation** — photos, notes, or data in → polished reports and
-  PDFs out (inspections, incident reports, quotes, audits, claims)
-- **AI assistants inside your workflow** — drafts your emails, follow-ups,
-  and customer replies in your voice
-- **Small-business web apps** — accounts, billing, dashboards, file uploads
-- **Workflow automation** — connect the tools you already use so busywork
-  runs itself
+## 🔧 What I build for clients
+- **AI agents** that do real multi-step work — research, intake, follow-up
+- **Document automation** — photos/notes/data in → reports, quotes & PDFs out
+- **Small-business web apps** — accounts, billing, dashboards, uploads
+- **Workflow automation** — your existing tools, minus the busywork
 
 ## 🪜 Why me?
+I've *been* the customer — I run a business and lead teams in high-stakes
+operations. I don't just write code; I know which 20 minutes of your day the
+software should give back.
 
-Because I've *been* the customer. I've run a business and led teams in
-high-stakes operations. I don't just write code — I know exactly which 20
-minutes of your day the software should give back.
-
----
-
-📫 **Hire me on Upwork:** [upwork.com/freelancers/nickwhitlock](https://www.upwork.com/freelancers/~01fa5af4508deeb57d)
-nick@ghostframetech.com
+📫 **Hire me:** [Upwork](https://www.upwork.com/freelancers/~01fa5af4508deeb57d) · nick@ghostframetech.com
