@@ -54,3 +54,4 @@ minutes of your day the software should give back.
 ---
 
 📫 **Hire me on Upwork:** [upwork.com/freelancers/nickwhitlock](https://www.upwork.com/freelancers/~01fa5af4508deeb57d)
+nick@ghostframetech.com
