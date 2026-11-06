@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="theme-color" content="#050d14"><title>THRESHOLD // Full 3D</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+:root{--bg:#061018;--ink:#f0f4f2;--mint:#a7e9db;--mut:#9ab0b5;--line:#3d5961;--red:#ed877a;--gold:#e6c48f}
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:'DM Mono',ui-monospace,monospace}button{color:inherit;cursor:pointer;font:inherit}button:focus-visible{outline:2px solid var(--mint);outline-offset:2px}#stage{display:block;width:100vw;height:100dvh;touch-action:none;outline:none;background:#07131b}#grain{position:fixed;inset:0;pointer-events:none;z-index:2;background:radial-gradient(ellipse at 50% 45%,transparent 26%,rgba(0,3,8,.47) 100%),repeating-linear-gradient(0deg,rgba(255,255,255,.014) 0px,rgba(255,255,255,.014) 1px,transparent 2px,transparent 4px)}
+#menu,#report,#pause{position:fixed;inset:0;z-index:7;display:flex;align-items:center;justify-content:center;background:linear-gradient(130deg,rgba(5,14,21,.96) 10%,rgba(7,20,27,.88) 65%,rgba(7,16,20,.78)),radial-gradient(ellipse at 87% 47%,rgba(126,210,189,.23),transparent 45%);overflow:auto;padding:22px}#menu[hidden],#report[hidden],#pause[hidden],#hud[hidden]{display:none!important}
+.shell{width:min(1120px,100%);display:grid;grid-template-columns:1.18fr .82fr;gap:42px;align-items:start}.topline{display:flex;gap:12px;align-items:center;letter-spacing:2.3px;font-size:10px;color:var(--mint);font-weight:bold}.topline i{width:22px;height:22px;display:inline-grid;place-items:center;border:1px solid var(--mint);font-style:normal;font-weight:bold}h1{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:clamp(74px,11vw,146px);font-weight:800;line-height:.76;letter-spacing:-3px;margin:45px 0 22px;color:#eef7f4}h1 em{font-style:normal;color:var(--mint)}.subtitle{font:600 clamp(17px,2.3vw,24px)/1.3 'Barlow Condensed',sans-serif;letter-spacing:3px;text-transform:uppercase;margin:0 0 14px}.intro{max-width:540px;color:#b5c7c9;line-height:1.8;font:13px/1.8 ui-monospace,monospace}.rule{height:1px;background:linear-gradient(90deg,var(--mint),transparent);margin:24px 0}.eyebrow{font-size:10px;letter-spacing:3px;color:var(--mint);text-transform:uppercase}.pill{display:inline-block;border:1px solid #5d7c7f;background:#112630;padding:7px 10px;color:#bfd7d9;font-size:10px;letter-spacing:1px;margin:4px 5px 4px 0}.panel{background:linear-gradient(160deg,#12242bc9,#09191fcf);border:1px solid #44616a;padding:25px;box-shadow:0 35px 75px rgba(0,0,0,.24)}.panel h2{font:700 27px 'Barlow Condensed',sans-serif;letter-spacing:1.4px;margin:6px 0 5px}.section-title{color:var(--mint);font-size:10px;letter-spacing:2px;margin:12px 0}.mission{width:100%;border:1px solid #3b555b;background:#0b1b21;text-align:left;padding:13px 14px;margin:5px 0;display:flex;gap:15px;align-items:center}.mission strong{display:block;font:700 21px 'Barlow Condensed',sans-serif;letter-spacing:.6px}.mission span{font-size:10px;color:#a0b5b7}.mission .num{color:var(--mint);font:600 24px 'Barlow Condensed',sans-serif}.mission.active{border-color:var(--mint);background:#16313a;box-shadow:inset 3px 0 var(--mint)}.modes{display:flex;gap:8px}.mode{padding:10px 13px;flex:1;background:#0c1c21;border:1px solid #3d565d;color:#b3c7c9;font-size:11px}.mode.active{color:#06151b;background:var(--mint);font-weight:bold}.primary{width:100%;padding:15px;border:1px solid #dbfcf0;background:var(--mint);color:#05141b;font:800 25px 'Barlow Condensed',sans-serif;letter-spacing:2px;margin-top:18px}.primary:hover{background:#ccfff4}.dim{color:#78959b;font-size:10px;line-height:1.8}.kbd{background:#13262d;border:1px solid #43616a;padding:3px 6px;color:#e6f8f4;display:inline-block;margin:2px}
+#hud{position:fixed;inset:0;z-index:4;pointer-events:none}.hud-top{position:absolute;left:27px;top:23px;display:flex;gap:12px;align-items:flex-start}.hud-card{border-left:2px solid var(--mint);padding:4px 15px;background:linear-gradient(90deg,rgba(4,15,20,.68),transparent)}.hud-main{font:700 23px 'Barlow Condensed',sans-serif;letter-spacing:1px}.hud-label{font-size:10px;letter-spacing:2px;color:var(--mint)}.hud-right{position:absolute;top:22px;right:27px;text-align:right;text-shadow:0 2px 8px #000}.big{font:700 37px 'Barlow Condensed',sans-serif}.small{font-size:10px;letter-spacing:1.5px;color:#bad2d1}.hud-bottom{position:absolute;left:27px;bottom:24px;background:linear-gradient(90deg,#06151bc4,transparent);border-left:2px solid #637c7e;padding:7px 15px}.hud-bottom .status{font:600 20px 'Barlow Condensed',sans-serif;color:#eff5f2;letter-spacing:.6px}.hud-bottom .help{font-size:10px;color:#b7c9c9;letter-spacing:.6px}.tip{position:absolute;left:50%;bottom:76px;transform:translateX(-50%);background:#091b21db;border:1px solid #64817e;box-shadow:0 7px 35px #0009;padding:9px 15px;max-width:min(550px,90vw);color:#dceee9;text-align:center;font-size:11px;letter-spacing:.5px;opacity:0;transition:opacity .25s}.tip.visible{opacity:1}.reticle{position:absolute;top:50%;left:50%;width:27px;height:27px;transform:translate(-50%,-50%);filter:drop-shadow(0 1px 2px #000);transition:transform .07s}.reticle span{position:absolute;background:#d6fdf6;opacity:.93}.reticle .t{width:1px;height:6px;left:13px;top:0}.reticle .b{width:1px;height:6px;left:13px;bottom:0}.reticle .l{height:1px;width:6px;top:13px;left:0}.reticle .r{height:1px;width:6px;top:13px;right:0}.reticle .dot{height:2px;width:2px;top:12px;left:12px}.reticle.contact span{background:var(--gold)}.reticle.danger span{background:#fa9085}.center-hint{position:absolute;left:50%;top:calc(50% + 31px);transform:translateX(-50%);color:#e4f3ee;text-shadow:0 2px 6px #000;font-size:10px;letter-spacing:1px;white-space:nowrap}.north{position:absolute;left:50%;top:18px;transform:translateX(-50%);font-size:10px;letter-spacing:4px;color:#b9c9c6}.left-note{position:absolute;right:25px;bottom:26px;text-align:right;font-size:10px;color:#aec6c7}.flash{position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(ellipse,transparent 24%,rgba(223,57,49,.5) 100%);transition:opacity .18s}.minimap{position:absolute;top:95px;right:25px;width:113px;height:153px;border:1px solid #557476;opacity:.66;background:#07191ed8}.minimap canvas{width:100%;height:100%}
+#touch{display:none;position:absolute;inset:0;pointer-events:none}.touch-zone{pointer-events:auto;touch-action:none}.stick{position:absolute;bottom:30px;left:28px;width:112px;height:112px;border-radius:50%;border:1px solid #a4c9c88f;background:#0d2b2e69;display:grid;place-items:center}.knob{width:48px;height:48px;border-radius:50%;background:#a7e9db75;border:1px solid #e1fff7}.look{position:absolute;left:42%;right:0;top:20%;bottom:15%;touch-action:none}.touch-buttons{position:absolute;bottom:24px;right:20px;display:grid;grid-template-columns:repeat(3,65px);gap:6px;pointer-events:auto}.touch-btn{border:1px solid #a7c8c9b4;background:#0c2630ce;width:65px;height:57px;display:grid;place-items:center;font:700 13px 'Barlow Condensed',sans-serif;letter-spacing:.6px;touch-action:none}.touch-btn.fire{grid-row:1/3;grid-column:3;height:120px;background:#ae594fce;border-color:#ffc9bf;font-size:21px}.touch-btn:active{background:#538783e0}#pauseBtn{position:absolute;top:62px;right:27px;pointer-events:auto;background:#081922a8;border:1px solid #708b8b;padding:4px 9px;font-size:10px}
+.dialog{width:min(550px,95vw);border:1px solid #5d8180;padding:30px;background:linear-gradient(160deg,#10262b,#08171c);box-shadow:0 30px 150px #000c}.dialog h2{font:800 58px 'Barlow Condensed',sans-serif;line-height:1;margin:17px 0}.dialog .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:25px 0}.stats>div{border-top:1px solid #4e686b;padding-top:10px}.stats b{font:700 31px 'Barlow Condensed',sans-serif;display:block}.stats small{font-size:9px;letter-spacing:1.5px;color:#9fb6b5}.outcome{padding:14px;background:#0a1c23;border:1px solid #3d565e;font:11px/1.7 ui-monospace,monospace;color:#c9d8d8}.secondary{width:100%;margin-top:9px;border:1px solid #58767a;background:transparent;padding:12px;color:#d3efeb;font:700 20px 'Barlow Condensed',sans-serif;letter-spacing:1px}
+#fallback{position:fixed;inset:0;z-index:12;background:#09151a;display:none;align-items:center;justify-content:center;text-align:center;padding:40px}#fallback.show{display:flex}
+@media(max-width:800px){.shell{grid-template-columns:1fr;gap:17px}.panel{padding:15px}h1{margin:25px 0 18px;font-size:76px}.intro{font-size:11px}#menu{align-items:start;overflow:auto}.hud-top{left:15px;top:12px}.hud-main{font-size:18px}.hud-right{right:15px;top:11px}.big{font-size:29px}.hud-bottom{left:12px;bottom:12px}.hud-bottom .status{font-size:16px}.hud-bottom .help{display:none}.minimap{width:83px;height:112px;right:12px;top:74px}.north{display:none}.left-note{display:none}}
+@media(pointer:coarse){#touch{display:block}.hud-bottom{bottom:7px;left:calc(50% - 78px);border:0;background:transparent;text-align:center;padding:5px}.hud-bottom .status{font-size:14px}.hud-label{font-size:8px}#pauseBtn{right:9px;top:55px}.minimap{display:none}.tip{bottom:145px}.center-hint{font-size:9px}}
+@media(max-height:510px){#menu{padding:10px 22px}.shell{grid-template-columns:1fr 1fr;gap:20px}.intro{display:none}h1{font-size:69px;margin:18px 0}.panel{padding:12px}.panel h2{font-size:19px}.mission{padding:6px 8px;margin:3px 0}.mission strong{font-size:16px}.mission span{font-size:9px}.mode{padding:7px}.primary{margin-top:8px;padding:9px;font-size:21px}.topline{font-size:9px}.rule{margin:9px 0}.hud-top{top:8px}.hud-right{top:8px}.touch-buttons{bottom:9px}.stick{bottom:12px}}
+</style></head><body>
+<canvas id="stage" tabindex="0"></canvas><div id="grain"></div>
+<section id="menu"><div class="shell"><div><div class="topline"><i>↗</i> THRESHOLD / INTERACTIVE SIMULATION <span style="color:#78959b">01-3D</span></div><h1>THRES<br><em>HOLD.</em></h1><p class="subtitle">Every shadow is a decision.</p><p class="intro">A fully explorable first-person judgment simulator. Navigate a dark house, identify who you're looking at, and make decisions under uncertainty. Protecting innocent people is the objective—not shooting the most targets.</p><div class="rule"></div><div class="eyebrow">NEW IN THIS BUILD</div><div><span class="pill">TRUE 3D ENVIRONMENT</span><span class="pill">DYNAMIC FLASHLIGHT</span><span class="pill">3D CHARACTERS</span><span class="pill">PROCEDURAL MATERIALS</span><span class="pill">NO DOWNLOADS</span></div><p class="dim" style="margin-top:20px">DESKTOP: WASD MOVE · MOUSE LOOK · E DOORS · Q CALL OUT · T OBSERVE · CLICK FIRE · R RELOAD · F FLASHLIGHT · ESC PAUSE</p></div>
+<div class="panel"><div class="eyebrow">CONFIGURE THE OPERATION</div><h2>SELECT SCENARIO</h2><button class="mission active" data-mission="0"><span class="num">01</span><span><strong>AFTER HOURS</strong><span>Unknown movement inside the house</span></span></button><button class="mission" data-mission="1"><span class="num">02</span><span><strong>THE UNEXPECTED</strong><span>Conflicting reports. Multiple occupants.</span></span></button><button class="mission" data-mission="2"><span class="num">03</span><span><strong>BLACKOUT</strong><span>Limited visibility, uncertain intentions.</span></span></button><div class="section-title">DECISION PRESSURE</div><div class="modes"><button class="mode active" data-mode="guided">GUIDED · NO TIMER</button><button class="mode" data-mode="pressure">PRESSURE · 03:00</button></div><button id="start" class="primary">BEGIN OPERATION ↗</button><p class="dim">Fictional game. Not real-world firearms or use-of-force instruction. Best on PC with Chrome/Edge; touch controls included.</p></div></div></section>
+<section id="hud" hidden><div class="hud-top"><div class="hud-card"><div class="hud-label">THRESHOLD // ACTIVE</div><div id="missionTitle" class="hud-main">AFTER HOURS</div><div class="small" id="objective">0/3 CONTACTS RESOLVED</div></div></div><div class="north">◄  W  ►</div><div class="hud-right"><div class="hud-label">AMMO / RESERVE</div><div class="big" id="ammo">12 <span class="small">/ 36</span></div><div class="hud-label" id="health">HEALTH 100% · LIGHT ON</div><div class="small" id="clock">TRAINING MODE</div></div><div class="minimap"><canvas id="map" width="225" height="306"></canvas></div><div class="reticle" id="reticle"><span class="t"></span><span class="b"></span><span class="l"></span><span class="r"></span><span class="dot"></span></div><div class="center-hint" id="hint"></div><div class="hud-bottom"><div class="hud-label">SITUATION REPORT</div><div class="status" id="status">Identify before acting.</div><div class="help">Q CALL OUT · T OBSERVE · E DOOR · F FLASHLIGHT</div></div><div class="left-note">LIVE SIMULATION<br>JUDGMENT OVER ACCURACY</div><div class="tip" id="tip"></div><div class="flash" id="hurt"></div><button id="pauseBtn">Ⅱ PAUSE</button>
+<div id="touch"><div id="stick" class="stick touch-zone"><div id="knob" class="knob"></div></div><div id="look" class="look touch-zone"></div><div class="touch-buttons"><button class="touch-btn" data-action="observe">OBSERVE</button><button class="touch-btn" data-action="command">CALL</button><button class="touch-btn fire" data-action="fire">FIRE</button><button class="touch-btn" data-action="door">DOOR</button><button class="touch-btn" data-action="reload">RELOAD</button><button class="touch-btn" data-action="flash">LIGHT</button><button class="touch-btn" data-action="pause">PAUSE</button></div></div></section>
+<section id="report" hidden><div class="dialog"><div class="eyebrow">OPERATION COMPLETE // AFTER-ACTION REVIEW</div><h2 id="reportTitle">GOOD JUDGMENT.</h2><div class="stats"><div><b id="sScore">0</b><small>JUDGMENT SCORE</small></div><div><b id="sSafe">0</b><small>PEOPLE PROTECTED</small></div><div><b id="sErrors">0</b><small>CRITICAL ERRORS</small></div></div><div class="outcome" id="reportText"></div><button class="primary" id="again">RETRY OPERATION ↗</button><button class="secondary" id="toMenu">SELECT ANOTHER MISSION</button></div></section>
+<section id="pause" hidden><div class="dialog"><div class="eyebrow">THRESHOLD // SUSPENDED</div><h2>PAUSED.</h2><p class="intro">Decisions aren't timed while paused.</p><button id="resume" class="primary">RESUME ↗</button><button id="quit" class="secondary">RETURN TO MENU</button></div></section>
+<div id="fallback"><div><h2>3D GRAPHICS UNAVAILABLE</h2><p>This browser needs WebGL 2 enabled to run THRESHOLD 3D. Try Chrome, Edge, or Safari on a recent device.</p></div></div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id), canvas=$('stage');
+const gl=canvas.getContext('webgl2',{antialias:true,alpha:false,powerPreference:'high-performance'});
+if(!gl){$('fallback').classList.add('show');throw new Error('WebGL2 unavailable')}
+const V=`#version 300 es
+precision highp float;
+in vec3 aPos;in vec3 aNorm;in vec2 aUV;in vec3 aColor;in float aMat;
+uniform mat4 uProj,uView;
+out vec3 vPos,vNorm,vColor;out vec2 vUV;flat out int vMat;
+void main(){vPos=aPos;vNorm=aNorm;vUV=aUV;vColor=aColor;vMat=int(aMat+.5);gl_Position=uProj*uView*vec4(aPos,1.);}`;
+const F=`#version 300 es
+precision highp float;
+in vec3 vPos,vNorm,vColor;in vec2 vUV;flat in int vMat;
+uniform vec3 uEye,uForward;uniform float uFlash,uTime,uMuzzle,uViewModel;
+out vec4 frag;
+float noise(vec3 p){return fract(sin(dot(p,vec3(12.9898,78.233,37.719)))*43758.5453);}
+void main(){
+ vec3 n=normalize(vNorm),col=vColor;
+ float grain=noise(floor(vPos*150.));
+ if(vMat==0){col*=.94+.065*sin(vPos.x*5.+vPos.y*7.)+.025*(grain-.5);}
+ if(vMat==1){float seam=step(.955,fract(vPos.z*1.38+.11))+step(.988,fract(vPos.x*.8));float stripe=.06*sin(vPos.x*23.+sin(vPos.z*11.)*1.9)+.03*sin(vPos.x*63.);col*=1.+stripe-.25*clamp(seam,0.,1.);}
+ if(vMat==2){float g=step(.965,fract(vPos.x*.88))+step(.965,fract(vPos.z*.88));col*=.92-.20*clamp(g,0.,1.);}
+ if(vMat==3){col*=.84+.16*abs(n.y)+.06*grain;}
+ if(vMat==4){float wood=.06*sin(vPos.x*14.+vPos.y*12.)+.06*sin(vPos.z*7.);col*=1.+wood;}
+ if(vMat==5){col*=.91+.10*(grain-.5);}
+ if(vMat==7){col*=.89+.12*grain;}
+ if(vMat==8){col*=.97+.07*grain;}
+ float lit=.10+.11*max(dot(n,normalize(vec3(-.32,.82,.43))),0.);
+ vec3 pts[5];pts[0]=vec3(0.,2.86,8.);pts[1]=vec3(-5.6,2.7,5.2);pts[2]=vec3(5.5,2.7,5.3);pts[3]=vec3(-5.5,2.7,-7.1);pts[4]=vec3(5.5,2.7,-7.7);
+ for(int i=0;i<5;i++){vec3 dv=pts[i]-vPos;float d=length(dv);float p=max(dot(n,dv/max(d,.001)),0.);float bulb=i==0?.75:(i==3?.65:.43);lit+=bulb*p/(1.+.11*d*d);}
+ vec3 to=vPos-uEye;float dist=length(to);float cone=dot(normalize(to),normalize(uForward));float spot=smoothstep(.73,.967,cone);float facing=max(dot(n,normalize(uEye-vPos)),.05);
+ lit+=uFlash*spot*facing*3.6/(1.+.033*dist*dist);
+ if(uMuzzle>0.&&dist<6.)lit+=uMuzzle*1.6/(1.+dist*dist);
+ vec3 color=col*(uViewModel>.5? .62+max(dot(n,vec3(.4,.7,.5)),0.)*.7 :lit);
+ if(vMat==6)color=col*1.55;
+ if(vMat==9)color=col*(.55+lit);
+ if(uViewModel<.5){float fog=smoothstep(10.,26.,dist)*.54;color=mix(color,vec3(.025,.071,.092),fog);}
+ color=pow(max(color,vec3(0.)),vec3(.82));
+ frag=vec4(color,1.);
+}`;
+function shader(type,src){const o=gl.createShader(type);gl.shaderSource(o,src);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(o));return o}
+const prog=gl.createProgram();gl.attachShader(prog,shader(gl.VERTEX_SHADER,V));gl.attachShader(prog,shader(gl.FRAGMENT_SHADER,F));gl.linkProgram(prog);if(!gl.getProgramParameter(prog,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(prog));gl.useProgram(prog);
+const uniforms={};['uProj','uView','uEye','uForward','uFlash','uTime','uMuzzle','uViewModel'].forEach(n=>uniforms[n]=gl.getUniformLocation(prog,n));
+const ATTR=12*4;
+function createBuffer(dynamic=false){let vao=gl.createVertexArray();gl.bindVertexArray(vao);let buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);let names=['aPos','aNorm','aUV','aColor','aMat'], sizes=[3,3,2,3,1],off=0;names.forEach((n,i)=>{const a=gl.getAttribLocation(prog,n);gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,sizes[i],gl.FLOAT,false,ATTR,off*4);off+=sizes[i]});gl.bindVertexArray(null);return{vao,buf,count:0,dynamic}}
+const staticBuffer=createBuffer(),dynamicBuffer=createBuffer(true),weaponBuffer=createBuffer(true);
+const gStatic=[],gDynamic=[],gGun=[],solids=[],doors=[];
+const colors={wall:[.52,.61,.60],wallDark:[.31,.43,.46],paint:[.59,.66,.65],wood:[.34,.23,.16],floor:[.40,.28,.19],tile:[.36,.43,.43],tile2:[.28,.34,.34],trim:[.17,.24,.27],metal:[.35,.42,.42],dark:[.095,.13,.15],leather:[.17,.26,.28],cloth:[.27,.34,.37],white:[.74,.79,.73],gold:[.80,.56,.31],glass:[.17,.42,.50],red:[.59,.24,.22],green:[.22,.43,.33],skin:[.76,.53,.39],rug:[.24,.30,.32]};
+const faces=[{n:[0,0,1],v:[[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]]},{n:[0,0,-1],v:[[1,-1,-1],[-1,-1,-1],[-1,1,-1],[1,1,-1]]},{n:[1,0,0],v:[[1,-1,1],[1,-1,-1],[1,1,-1],[1,1,1]]},{n:[-1,0,0],v:[[-1,-1,-1],[-1,-1,1],[-1,1,1],[-1,1,-1]]},{n:[0,1,0],v:[[-1,1,1],[1,1,1],[1,1,-1],[-1,1,-1]]},{n:[0,-1,0],v:[[-1,-1,-1],[1,-1,-1],[1,-1,1],[-1,-1,1]]}];
+const ix=[0,1,2,0,2,3],uv=[[0,0],[1,0],[1,1],[0,1]];
+function box(g,x,y,z,w,h,d,c,mat=0,angle=0,pivot=null){const co=Array.isArray(c)?c:colors[c];const ca=Math.cos(angle),sa=Math.sin(angle),px=pivot?pivot[0]:x,pz=pivot?pivot[1]:z;for(const face of faces){let nn=face.n,rx=nn[0]*ca-nn[2]*sa,rz=nn[0]*sa+nn[2]*ca;for(let k=0;k<6;k++){let j=ix[k],p=face.v[j],wx=x+p[0]*w*.5,wz=z+p[2]*d*.5,xx=px+(wx-px)*ca-(wz-pz)*sa,zz=pz+(wx-px)*sa+(wz-pz)*ca;g.push(xx,y+p[1]*h*.5,zz,rx,nn[1],rz,uv[j][0],uv[j][1],co[0],co[1],co[2],mat)}}}
+function sbox(...a){box(gStatic,...a)}function dynbox(...a){box(gDynamic,...a)}
+function wallV(x,z1,z2,c='wall'){sbox(x,1.56,(z1+z2)/2,.24,3.12,z2-z1,c,0);sbox(x,.12,(z1+z2)/2,.29,.18,z2-z1,'trim',7);solids.push({minx:x-.15,maxx:x+.15,minz:z1,maxz:z2})}
+function wallH(x1,x2,z,c='wall'){sbox((x1+x2)/2,1.56,z,x2-x1,3.12,.24,c,0);sbox((x1+x2)/2,.12,z,x2-x1,.18,.30,'trim',7);solids.push({minx:x1,maxx:x2,minz:z-.15,maxz:z+.15})}
+function furniture(x,y,z,w,h,d,c,mat=4,solid=false){sbox(x,y,z,w,h,d,c,mat);if(solid&&h>.43)solids.push({minx:x-w/2+.05,maxx:x+w/2-.05,minz:z-d/2+.05,maxz:z+d/2-.05})}
+function addDoor(x,z,side){const d={x,z,side,open:false,angle:0,angleTarget:0};doors.push(d);sbox(x,2.75,z,.39,.28,2.30,'trim',7);sbox(x,.17,z-1.13,.37,.32,.12,'trim',7);sbox(x,.17,z+1.13,.37,.32,.12,'trim',7)}
+function build(){
+ // foundation, ceiling and shell
+ sbox(0,-.16,0,16.6,.32,24.6,'floor',1);sbox(0,3.25,0,16.6,.22,24.6,'paint',0);sbox(0,3.32,0,4.45,.2,24,'wallDark',0);
+ wallV(-8.05,-12.15,12.15);wallV(8.05,-12.15,12.15);wallH(-8.1,8.1,-12.15);wallH(-8.1,8.1,12.15);
+ wallV(-2.25,-12.05,-6.8);wallV(-2.25,-4.8,3.45);wallV(-2.25,5.55,12.05);
+ wallV(2.25,-12.05,-9.2);wallV(2.25,-7.2,-1.0);wallV(2.25,1.0,12.05);
+ wallH(-7.95,-2.36,.15);wallH(2.36,7.95,-4.10);
+ addDoor(-2.25,4.5,-1);addDoor(-2.25,-5.8,-1);addDoor(2.25,0.,1);addDoor(2.25,-8.2,1);
+ // hallway architecture
+ for(let z=-11;z<=11;z+=2.2){sbox(0,3.125,z,4.05,.048,.05,'trim',7);sbox(-2.02,2.95,z,.09,.12,.08,'metal',3);sbox(2.02,2.95,z,.09,.12,.08,'metal',3)}
+ sbox(0,3.09,8.,.9,.10,.9,'white',6);sbox(0,3.09,1.2,.9,.10,.9,'white',6);sbox(0,3.09,-6.9,.9,.10,.9,'white',6);
+ for(let z=9.8;z>-12;z-=3.4){sbox(-2.0,1.43,z,.045,1.4,.3,'trim',7);sbox(2.,1.43,z,.045,1.4,.3,'trim',7)}
+ sbox(0,.012,8,2.7,.025,4.0,'rug',5);sbox(0,.018,-2.5,2.7,.025,4.1,'rug',5);
+ // west living room
+ sbox(-5.2,.018,5.3,4.75,.04,4.15,'rug',5);
+ furniture(-5.6,.36,6.7,3.6,.65,1.2,'leather',5,true);furniture(-5.6,.92,7.18,3.6,.8,.30,'leather',5);furniture(-7.34,.69,6.7,.35,.9,1.22,'leather',5);
+ furniture(-4.25,.40,4.78,2.35,.52,1.1,'wood',4,true);furniture(-4.25,.67,4.78,1.55,.035,.68,'metal',3);
+ furniture(-7.33,1.0,1.9,.62,1.95,2.3,'wood',4,true);for(let y=.37;y<2.;y+=.42) furniture(-7.0,y,1.9,.7,.045,2.12,'trim',7);
+ furniture(-3.15,.52,7.8,.65,1.0,.65,'wood');furniture(-3.15,1.18,7.8,.12,.36,.12,'gold',3);furniture(-3.15,1.41,7.8,.65,.17,.65,'white',6);
+ // paintings on west/ back walls
+ sbox(-5.4,1.87,.32,2.0,1.0,.06,'trim',7);sbox(-5.4,1.87,.352,1.78,.78,.04,'glass',6);
+ sbox(-7.89,1.9,4.9,.05,1.35,1.55,'trim',7);sbox(-7.84,1.9,4.9,.03,1.17,1.35,'green',5);
+ // east kitchen
+ sbox(5.1,.018,5.8,4.6,.035,4.7,'tile',2);
+ furniture(7.12,.49,5.1,1.25,.95,6.3,'wood',4,true);furniture(7.08,1.0,5.1,1.39,.12,6.55,'tile',2);
+ furniture(5.30,.5,2.20,3.6,.94,1.10,'wood',4,true);furniture(5.3,1.01,2.2,3.8,.12,1.3,'tile',2);
+ furniture(5.4,1.48,2.25,1.1,.08,.75,'metal',3);furniture(5.4,1.58,2.25,.25,.10,.25,'dark',3);
+ furniture(7.24,1.12,9.42,1.1,2.3,1.08,'metal',3,true);furniture(7.25,1.3,9.42,1.13,.045,1.1,'trim',7);
+ for(let z=3.3;z<=7.8;z+=1.5){furniture(7.35,2.37,z,.85,.9,1.25,'white',4);furniture(7.0,1.46,z,.4,.03,.8,'metal',3)}
+ furniture(4.4,.43,7.0,1.7,.12,1.12,'wood',4);for(let dx of [-.68,.68])for(let dz of [-.40,.40])furniture(4.4+dx,.20,7+dz,.12,.39,.12,'metal',3);
+ sbox(5.4,3.04,5.2,1.3,.1,1.3,'white',6);
+ // west bedroom
+ sbox(-5.6,.022,-7.8,4.6,.04,4.3,'rug',5);
+ furniture(-5.4,.35,-7.84,3.25,.58,4.7,'wood',4,true);furniture(-5.4,.71,-7.83,3.12,.20,4.25,'white',5);furniture(-5.4,1.17,-10.07,3.4,1.18,.34,'wood',4);
+ furniture(-7.2,.39,-4.55,.95,.76,1.05,'wood',4,true);furniture(-7.2,.84,-4.55,.1,.2,.1,'gold',3);furniture(-7.2,1.03,-4.55,.62,.22,.62,'white',6);
+ furniture(-3.02,1.06,-10.60,.64,2.06,2.35,'wood',4,true);for(let y=.5;y<2.1;y+=.4)sbox(-2.66,y,-10.6,.035,.04,2.15,'metal',3);
+ sbox(-7.85,1.85,-7.3,.07,1.7,2.65,'glass',6);
+ // east utility/office
+ sbox(5.5,.018,-7.7,4.65,.03,5.4,'rug',5);
+ furniture(7.20,.46,-7.2,1.25,.9,4.3,'wood',4,true);furniture(7.15,.96,-7.2,1.4,.14,4.5,'metal',3);
+ furniture(5.2,.49,-10.55,3.9,.93,1.0,'wood',4,true);furniture(5.2,.96,-10.55,3.9,.13,1.05,'wood',4);
+ sbox(5.2,1.42,-10.65,1.7,.84,.12,'dark',3);sbox(5.2,1.43,-10.58,1.5,.68,.02,'glass',6);
+ furniture(3.5,.48,-9.1,.96,.78,.90,'leather',5);furniture(3.48,.9,-9.4,.94,.75,.15,'leather',5);
+ for(let i=0;i<3;i++){furniture(7.3,1.38+i*.52,-10.75,1.0,.10,1.2,'metal',3);furniture(7.25,1.5+i*.52,-10.7,.58,.20,.58,i%2?'wood':'dark',4)}
+ furniture(7.2,1.2,-5.3,.92,2.25,1.45,'dark',3,true);
+ // east front artwork
+ sbox(7.90,1.86,10.0,.045,1.14,1.65,'trim',7);sbox(7.86,1.86,10.0,.02,.99,1.48,'glass',6);
+ // scene details: wall sconces, potted plants, chair legs
+ for(let [x,z] of [[-7.3,10.5],[3.0,10.5],[-3.0,-2.1],[6.8,-3.0]]){furniture(x,.36,z,.55,.73,.55,'wood',4);furniture(x,.79,z,.37,.26,.37,'green',5);for(let i=0;i<5;i++){let a=i*6.28/5;sbox(x+Math.cos(a)*.14,1.12,z+Math.sin(a)*.14,.30,.57,.30,'green',5)}}
+ for(let z of [-1.7,10.5]){sbox(-1.97,2.28,z,.11,.48,.20,'gold',3);sbox(-1.89,2.43,z,.12,.20,.38,'white',6)}
+ for(let z of [-2.5,7.4]){sbox(1.97,2.28,z,.11,.48,.20,'gold',3);sbox(1.89,2.43,z,.12,.20,.38,'white',6)}
+ // exterior moonlit windows
+ for(let z of [-9.,-1.8,5.7]){sbox(-8.0,1.92,z,.065,1.42,1.25,'glass',6);sbox(-7.93,1.92,z,.08,1.49,.07,'trim',7);sbox(-7.93,1.92,z,.08,.07,1.38,'trim',7)}
+ for(let z of [-9.9,6.6]){sbox(8.0,1.92,z,.065,1.42,1.25,'glass',6);sbox(7.93,1.92,z,.08,1.49,.07,'trim',7)}
+}
+build();
+function upload(b,g,usage){gl.bindBuffer(gl.ARRAY_BUFFER,b.buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(g),usage);b.count=g.length/12}
+upload(staticBuffer,gStatic,gl.STATIC_DRAW);gStatic.length=0;
+const eye={x:0,y:1.65,z:10.3},player={yaw:0,pitch:0,hp:100,ammo:12,reserve:36,flash:true,moving:0,recoil:0,bulb:0,hurt:0};
+const keys={},state={phase:'menu',mission:0,mode:'guided',secs:0,score:0,errors:0,protected:0,shots:0,hits:0,notice:'',noticeUntil:0,reloadUntil:0,actors:[],started:0,warning:0,damageAt:0,timedOut:false};
+const MISSIONS=[{name:'AFTER HOURS',intro:'Unknown movement inside the house. Three people may be present.',roles:['civilian','uncertain','threat'],positions:[0,1,3]},{name:'THE UNEXPECTED',intro:'Multiple occupants and a conflicting report. Identify everyone.',roles:['threat','civilian','uncertain','civilian'],positions:[1,2,3,0]},{name:'BLACKOUT',intro:'Power fluctuations. Uncertain objects and intentions.',roles:['uncertain','threat','civilian','threat'],positions:[0,2,3,1]}];
+const spots=[[-5.75,3.1],[5.3,.05],[-4.6,-4.65],[5.2,-8.9]];
+function notify(msg,sec=3){state.notice=msg;state.noticeUntil=performance.now()+sec*1000;$('status').textContent=msg}
+function start(){const m=MISSIONS[state.mission];state.phase='play';state.secs=0;state.started=performance.now();state.score=0;state.errors=0;state.protected=0;state.shots=0;state.hits=0;state.damageAt=performance.now()+12000;state.timedOut=false;state.reloadUntil=0;player.hp=100;player.ammo=12;player.reserve=36;player.flash=state.mission!==2;player.yaw=0;player.pitch=0;player.recoil=0;eye.x=0;eye.y=1.65;eye.z=10.3;doors.forEach(d=>{d.open=false;d.angle=0;d.angleTarget=0});state.actors=m.roles.map((role,i)=>{const [x,z]=spots[m.positions[i]];return{x,z,role,id:i,inspected:false,resolved:false,safe:false,pose:0,alert:false,head:0,phase:Math.random()*6.28,cloth:i%2?'cloth':'leather',tone:i%3?'skin':[.54,.37,.27],holding:role==='threat'?'weapon':role==='uncertain'?'phone':'none'}});$('missionTitle').textContent=m.name;$('menu').hidden=true;$('report').hidden=true;$('pause').hidden=true;$('hud').hidden=false;notify('Move carefully. Identify all contacts.',5);canvas.focus();if(matchMedia('(pointer:fine)').matches)canvas.requestPointerLock?.().catch(()=>{})}
+function pause(){if(state.phase!=='play')return;state.phase='pause';$('pause').hidden=false;if(document.pointerLockElement===canvas)document.exitPointerLock()}
+function resume(){if(state.phase!=='pause')return;state.phase='play';$('pause').hidden=true;canvas.focus();if(matchMedia('(pointer:fine)').matches)canvas.requestPointerLock?.().catch(()=>{})}
+function home(){state.phase='menu';$('menu').hidden=false;$('hud').hidden=true;$('report').hidden=true;$('pause').hidden=true;if(document.pointerLockElement===canvas)document.exitPointerLock()}
+function end(reason='complete'){if(state.phase!=='play')return;state.phase='report';if(document.pointerLockElement===canvas)document.exitPointerLock();$('hud').hidden=true;$('report').hidden=false;let serious=state.errors>0;let all=reason==='complete';$('reportTitle').textContent=serious?'REVIEW REQUIRED.':all?'OPERATION COMPLETE.':'OPERATION ENDED.';$('sScore').textContent=Math.max(0,state.score);$('sSafe').textContent=state.protected;$('sErrors').textContent=state.errors;let text=serious?`Critical decision errors: ${state.errors}. Review what you identified before using force. Your priority is to protect innocent people.`:all?`All ${state.actors.length} contacts accounted for. ${state.protected} person(s) safeguarded. Accuracy: ${state.shots?Math.round(state.hits/state.shots*100):100}%. Avoiding unnecessary force is part of a successful operation.`:reason==='health'?'The operation ended when your health reached zero. Observation, communication, and restraint affect your outcome.':'Time expired before every person was accounted for. Prioritize identifying people and resolving encounters safely.';$('reportText').textContent=text}
+const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+function forward(){return[Math.sin(player.yaw)*Math.cos(player.pitch),Math.sin(player.pitch),-Math.cos(player.yaw)*Math.cos(player.pitch)]}
+const dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+function wallHit(x,z){const r=.30;for(let s of solids)if(x+r>s.minx&&x-r<s.maxx&&z+r>s.minz&&z-r<s.maxz)return true;for(let d of doors)if(!d.open&&Math.abs(x-d.x)<.35+r&&Math.abs(z-d.z)<1.+r)return true;return Math.abs(x)>7.6||Math.abs(z)>11.75}
+function lookTarget(){const f=forward(),cam=[eye.x,eye.y,eye.z];let best=null,bestDist=1e4;for(let a of state.actors){if(a.resolved)continue;let dx=a.x-eye.x,dz=a.z-eye.z,dy=1.16-eye.y,t=dx*f[0]+dy*f[1]+dz*f[2];if(t<.5||t>16)continue;let dist2=dx*dx+dy*dy+dz*dz-t*t;if(dist2>.60*.60||t>=bestDist)continue;let blocked=false;for(let w of solids){if(rayRect(eye.x,eye.z,f[0],f[2],w.minx,w.maxx,w.minz,w.maxz,t-.5)){blocked=true;break}}if(!blocked)for(let d of doors)if(!d.open&&rayRect(eye.x,eye.z,f[0],f[2],d.x-.19,d.x+.19,d.z-1,d.z+1,t-.5))blocked=true;if(!blocked){best=a;bestDist=t}}return best}
+function rayRect(x,z,dx,dz,x1,x2,z1,z2,maxDist){let lo=0,hi=maxDist;for(let [orig,dir,a,b] of [[x,dx,x1,x2],[z,dz,z1,z2]]){if(Math.abs(dir)<1e-7){if(orig<a||orig>b)return false;continue}let t1=(a-orig)/dir,t2=(b-orig)/dir;if(t1>t2)[t1,t2]=[t2,t1];lo=Math.max(lo,t1);hi=Math.min(hi,t2);if(lo>hi)return false}return hi>0&&lo<maxDist}
+function nearbyDoor(){let best=null,distance=2.35;for(let d of doors){let dis=Math.hypot(eye.x-d.x,eye.z-d.z);if(dis<distance){best=d;distance=dis}}return best}
+function toggleDoor(){if(state.phase!=='play')return;let d=nearbyDoor();if(!d){notify('Move closer to a doorway.',1.6);return}d.open=!d.open;d.angleTarget=d.open?-d.side*Math.PI*.52:0;notify(d.open?'Door opened.':'Door closed.',1.5);tone(260,.05,.12)}
+function observe(){if(state.phase!=='play')return;let a=lookTarget();if(!a){notify('No person centered in view. Look toward a contact.',2.2);return}a.inspected=true;let msg=a.holding==='weapon'?'OBSERVED: Person appears to be holding a firearm.':a.holding==='phone'?'OBSERVED: Object identified as a phone.':'OBSERVED: Hands appear empty.';notify(msg,4.4);state.score+=25;tone(480,.08,.08)}
+function command(){if(state.phase!=='play')return;let a=lookTarget();if(!a){notify('No one in view to address.',2);return}let d=Math.hypot(a.x-eye.x,a.z-eye.z);if(d>16){notify('Move closer before attempting communication.',2);return}if(a.role==='threat'){if(Math.random()<.26){a.resolved=true;a.safe=true;a.pose=1;state.protected++;state.score+=220;notify('Armed person complied and is no longer a threat.',4)}else{a.alert=true;state.score+=20;notify('Person has not complied. Continue assessing.',3)}}else{a.resolved=true;a.safe=true;a.pose=1;state.protected++;state.score+=a.inspected?185:145;notify(a.role==='uncertain'?'Person complied. Object was a phone.':'Person complied. Civilian safe.',4)}tone(290,.08,.12);checkComplete()}
+function fire(){if(state.phase!=='play')return;if(state.reloadUntil>performance.now())return;if(player.ammo<=0){notify('Magazine empty — press R to reload.',2);tone(150,.12,.08);return}player.ammo--;player.recoil=1;player.bulb=.12;state.shots++;let a=lookTarget();if(!a){state.score=Math.max(0,state.score-12);notify('No confirmed contact. Round discharged.',1.5);noise(.065,.19);return}state.hits++;a.resolved=true;a.safe=false;a.pose=2;if(a.role==='threat'){state.score+=a.inspected?240:170;notify('Armed threat stopped. Continue checking the house.',3)}else{state.errors++;state.score=Math.max(0,state.score-370);notify('CRITICAL ERROR — non-threatening person was shot.',4);player.hurt=.35}noise(.07,.24);checkComplete()}
+function reload(){if(state.phase!=='play'||state.reloadUntil>performance.now()||player.ammo>=12||player.reserve<=0)return;state.reloadUntil=performance.now()+1200;notify('Reloading...',1.2);tone(210,.08,.12);setTimeout(()=>{if(state.phase==='play'&&state.reloadUntil){let n=Math.min(12-player.ammo,player.reserve);player.ammo+=n;player.reserve-=n;state.reloadUntil=0;notify('Reload complete.',1.4);tone(420,.04,.10)}},1200)}
+function toggleFlash(){if(state.phase!=='play')return;player.flash=!player.flash;notify(player.flash?'Flashlight on.':'Flashlight off.',1.2);tone(620,.04,.08)}
+function checkComplete(){if(state.actors.length&&state.actors.every(a=>a.resolved)){notify('All contacts accounted for. Operation complete.',2);setTimeout(()=>{if(state.phase==='play'&&state.actors.every(a=>a.resolved))end()},1000)}}
+let audio;function tone(freq,duration=.08,vol=.05){try{audio=audio||new(window.AudioContext||window.webkitAudioContext)();let o=audio.createOscillator(),g=audio.createGain();o.type='triangle';o.frequency.value=freq;g.gain.setValueAtTime(vol,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+duration);o.connect(g);g.connect(audio.destination);o.start();o.stop(audio.currentTime+duration)}catch(e){}}
+function noise(duration=.08,vol=.1){try{audio=audio||new(window.AudioContext||window.webkitAudioContext)();let n=Math.floor(audio.sampleRate*duration),b=audio.createBuffer(1,n,audio.sampleRate),ch=b.getChannelData(0);for(let i=0;i<n;i++)ch[i]=(Math.random()*2-1)*(1-i/n);let s=audio.createBufferSource(),g=audio.createGain();s.buffer=b;g.gain.value=vol;s.connect(g);g.connect(audio.destination);s.start()}catch(e){}}
+function perspective(fov,aspect,near,far){let f=1/Math.tan(fov/2),nf=1/(near-far);return new Float32Array([f/aspect,0,0,0,0,f,0,0,0,0,(far+near)*nf,-1,0,0,2*far*near*nf,0])}
+function viewMatrix(){let f=forward(),r=[Math.cos(player.yaw),0,Math.sin(player.yaw)],u=[r[1]*f[2]-r[2]*f[1],r[2]*f[0]-r[0]*f[2],r[0]*f[1]-r[1]*f[0]];return new Float32Array([r[0],u[0],-f[0],0,r[1],u[1],-f[1],0,r[2],u[2],-f[2],0,-dot(r,[eye.x,eye.y,eye.z]),-dot(u,[eye.x,eye.y,eye.z]),dot(f,[eye.x,eye.y,eye.z]),1])}
+function human(a,t){let x=a.x,z=a.z,move=Math.sin(t*1.4+a.phase)*.05,turn=Math.sin(t*.7+a.phase)*.15;const jacket=a.cloth==='cloth'?'cloth':'leather',pant=a.id%2?'dark':'trim';const bodyY=a.pose===2?.20:1.24; if(a.pose===2){ // collapsed contacts remain visible and non-interactive
+  dynbox(x,.17,z,1.05,.32,.65,jacket,5,turn);dynbox(x+.56,.14,z,.45,.25,.38,a.tone,8,turn);dynbox(x-.5,.14,z,.7,.24,.42,pant,5,turn);return;
+ }
+ const surrender=a.pose===1;let sway=surrender?0:move;
+ // shoes, legs, torso
+ dynbox(x-.21,.13,z+.07,.29,.26,.53,'dark',4,turn);dynbox(x+.21,.13,z+.07,.29,.26,.53,'dark',4,turn);
+ dynbox(x-.18,.52,z,.33,.72,.39,pant,5,turn);dynbox(x+.18,.52,z,.33,.72,.39,pant,5,turn);
+ dynbox(x,1.25+sway,z,.86,.92,.43,jacket,5,turn);
+ dynbox(x,1.73+sway,z,.37,.18,.37,a.tone,8,turn);
+ dynbox(x,1.91+sway,z,.43,.39,.40,a.tone,8,turn);
+ dynbox(x,2.12+sway,z-.035,.46,.13,.43,a.id%2?'dark':'wood',5,turn);
+ dynbox(x-.46,surrender?1.74:1.23+sway,z,.28,surrender?.62:.67,.36,jacket,5,turn);
+ dynbox(x+.46,surrender?1.74:1.23+sway,z,.28,surrender?.62:.67,.36,jacket,5,turn);
+ dynbox(x-.46,surrender?2.13:.83+sway,z,.26,.24,.29,a.tone,8,turn);
+ dynbox(x+.46,surrender?2.13:.83+sway,z,.26,.24,.29,a.tone,8,turn);
+ // a small distinct object in the right hand; requires observation to identify
+ if(!surrender&&a.holding==='phone'){dynbox(x+.47,.92+sway,z-.24,.16,.30,.055,'dark',3,turn);dynbox(x+.47,.92+sway,z-.28,.12,.22,.013,'glass',6,turn)}
+ if(!surrender&&a.holding==='weapon'){dynbox(x+.51,.91+sway,z-.28,.30,.11,.48,'dark',3,turn);dynbox(x+.54,.81+sway,z-.14,.11,.27,.12,'trim',3,turn)}
+ // soft eye highlights suggest expressions without labeling intent
+ dynbox(x-.10,1.93+sway,z-.208,.045,.035,.02,'dark',3);dynbox(x+.10,1.93+sway,z-.208,.045,.035,.02,'dark',3);
+}
+function doorGeom(d){let p=[d.x,d.z-.94],a=d.angle;dynbox(d.x,1.49,d.z,.10,2.86,1.85,'wood',4,a,p);dynbox(d.x-d.side*.075,1.44,d.z,.04,2.45,1.52,'wallDark',4,a,p);dynbox(d.x-d.side*.12,1.17,d.z+.59,.10,.16,.08,'gold',3,a,p);dynbox(d.x+d.side*.04,2.18,d.z,.02,.35,1.35,'trim',7,a,p)}
+function weapon(t){const bz=player.recoil*.21;const drift=Math.sin(t*8)*player.moving*.016;const bob=Math.abs(Math.sin(t*7))*player.moving*.03;let px=.49+drift,py=-.59+bob+player.recoil*.09,pz=-.92+bz;
+ box(gGun,px+.11,py-.22,pz+.16,.32,.45,.31,'dark',3,.15);
+ box(gGun,px,py-.08,pz-.24,.21,.20,.98,'metal',3);
+ box(gGun,px,py-.015,pz-.40,.23,.09,.80,'dark',3);
+ box(gGun,px,py+.07,pz-.69,.22,.09,.21,'trim',3);
+ box(gGun,px,py+.09,pz-.73,.055,.17,.055,'dark',3);
+ box(gGun,px,py+.13,pz+.13,.19,.11,.10,'dark',3);
+ box(gGun,px,py-.12,pz-.77,.085,.11,.21,'dark',3);
+ box(gGun,px-.10,py-.09,pz+.02,.085,.21,.20,'dark',3);
+ box(gGun,px+.20,py-.16,pz+.16,.23,.23,.24,'skin',8);
+ box(gGun,px+.35,py-.40,pz+.23,.36,.20,.63,'cloth',5,-.34);
+ if(player.bulb>0){box(gGun,px,py-.05,pz-1.0,.17,.17,.23,'gold',6);box(gGun,px,py-.05,pz-1.09,.31,.24,.13,'white',6)}
+}
+function draw(buffer){gl.bindVertexArray(buffer.vao);gl.drawArrays(gl.TRIANGLES,0,buffer.count)}
+let screenW=0,screenH=0,proj=perspective(73*Math.PI/180,1,.06,48),last=performance.now(),nowSec=0;
+function resize(){let w=innerWidth,h=innerHeight,pix=Math.min(devicePixelRatio||1,matchMedia('(pointer:coarse)').matches?1.1:1.75);let ww=Math.max(1,Math.floor(w*pix)),hh=Math.max(1,Math.floor(h*pix));if(ww===screenW&&hh===screenH)return;screenW=canvas.width=ww;screenH=canvas.height=hh;proj=perspective((w<h?80:74)*Math.PI/180,ww/hh,.06,50);gl.viewport(0,0,ww,hh)}
+function render(t){resize();gl.clearColor(.018,.044,.061,1);gl.clearDepth(1);gl.enable(gl.DEPTH_TEST);gl.enable(gl.CULL_FACE);gl.cullFace(gl.BACK);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(prog);gl.uniformMatrix4fv(uniforms.uProj,false,proj);gl.uniformMatrix4fv(uniforms.uView,false,viewMatrix());gl.uniform3f(uniforms.uEye,eye.x,eye.y,eye.z);let f=forward();gl.uniform3f(uniforms.uForward,...f);gl.uniform1f(uniforms.uFlash,player.flash?1:0);gl.uniform1f(uniforms.uTime,t);gl.uniform1f(uniforms.uMuzzle,player.bulb>0?player.bulb/.12:0);gl.uniform1f(uniforms.uViewModel,0);
+ draw(staticBuffer);
+ gDynamic.length=0;
+ for(let d of doors)doorGeom(d);
+ for(let a of state.actors)human(a,t);
+ upload(dynamicBuffer,gDynamic,gl.DYNAMIC_DRAW);draw(dynamicBuffer);
+ // Weapon is rendered as a proper 3D viewmodel, with independent depth.
+ if(state.phase!=='menu'){
+  gl.clear(gl.DEPTH_BUFFER_BIT);gl.uniformMatrix4fv(uniforms.uView,false,new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]));gl.uniform1f(uniforms.uViewModel,1);
+  gGun.length=0;weapon(t);upload(weaponBuffer,gGun,gl.DYNAMIC_DRAW);draw(weaponBuffer);
+ }
+ gl.bindVertexArray(null);
+}
+const joy={x:0,y:0};
+function gameStep(dt,now){if(state.phase!=='play')return;state.secs+=dt;if(state.mode==='pressure'&&state.secs>180){state.timedOut=true;end('time');return}
+ let fwd=(keys.w||keys.arrowup?1:0)-(keys.s||keys.arrowdown?1:0)-joy.y,strafe=(keys.d||keys.arrowright?1:0)-(keys.a||keys.arrowleft?1:0)+joy.x,len=Math.hypot(fwd,strafe);player.moving=clamp(len,0,1);if(len>.05){fwd/=Math.max(len,1);strafe/=Math.max(len,1);const speed=(keys.shift?3.7:2.65)*dt,mx=(fwd*Math.sin(player.yaw)+strafe*Math.cos(player.yaw))*speed,mz=(-fwd*Math.cos(player.yaw)+strafe*Math.sin(player.yaw))*speed;if(!wallHit(eye.x+mx,eye.z))eye.x+=mx;if(!wallHit(eye.x,eye.z+mz))eye.z+=mz}
+ eye.y=1.64+player.moving*Math.sin(state.secs*11)*.016;
+ player.recoil=Math.max(0,player.recoil-dt*5.5);player.bulb=Math.max(0,player.bulb-dt);player.hurt=Math.max(0,player.hurt-dt*.75);
+ for(let d of doors)d.angle+=(d.angleTarget-d.angle)*Math.min(1,dt*8);
+ // abstract danger pressure: nearby active armed contacts can lower health
+ if(now>state.damageAt){const armed=state.actors.filter(a=>!a.resolved&&a.role==='threat'&&Math.hypot(eye.x-a.x,eye.z-a.z)<6.8);if(armed.length){player.hp-=9;player.hurt=.48;notify('DANGER: Keep assessing and address the armed contact.',2.7);tone(145,.24,.07);if(player.hp<=0){player.hp=0;end('health');return}}state.damageAt=now+6600}
+ if(state.noticeUntil&&now>state.noticeUntil){state.noticeUntil=0;$('status').textContent='Identify every person and resolve encounters.'}
+ $('objective').textContent=`${state.actors.filter(a=>a.resolved).length}/${state.actors.length} CONTACTS RESOLVED`;$('ammo').innerHTML=`${player.ammo} <span class="small">/ ${player.reserve}</span>`;$('health').textContent=`HEALTH ${player.hp}% · LIGHT ${player.flash?'ON':'OFF'}`;$('clock').textContent=state.mode==='pressure'?`TIME LEFT ${Math.floor(Math.max(0,180-state.secs)/60)}:${String(Math.floor(Math.max(0,180-state.secs)%60)).padStart(2,'0')}`:'GUIDED · NO TIMER';$('hurt').style.opacity=player.hurt;let a=lookTarget(),d=nearbyDoor();$('hint').textContent=a?'PERSON IN VIEW · T OBSERVE · Q CALL OUT':d?`E ${d.open?'CLOSE':'OPEN'} DOOR`:'';$('reticle').classList.toggle('contact',!!a);$('reticle').classList.toggle('danger',!!a&&a.inspected&&a.role==='threat');$('reticle').style.transform=`translate(-50%,-50%) scale(${1+player.recoil*.45})`;if(now-state.started<5500){$('tip').textContent=MISSIONS[state.mission].intro;$('tip').classList.add('visible')}else if(state.noticeUntil&&/OBSERVED|CRITICAL/.test(state.notice)){$('tip').textContent=state.notice;$('tip').classList.add('visible')}else{$('tip').classList.remove('visible')}
+ updateMap();
+}
+function updateMap(){const c=$('map'),ctx=c.getContext('2d'),W=c.width,H=c.height;ctx.clearRect(0,0,W,H);ctx.fillStyle='#091c21';ctx.fillRect(0,0,W,H);const cx=x=>(x+8.3)/16.6*W,cz=z=>(z+12.25)/24.5*H;ctx.strokeStyle='#537373';ctx.lineWidth=3;ctx.strokeRect(cx(-8),cz(-12),cx(8)-cx(-8),cz(12)-cz(-12));ctx.lineWidth=2;for(let s of solids){ctx.fillStyle='#55787a';ctx.fillRect(cx(s.minx),cz(s.minz),Math.max(2,cx(s.maxx)-cx(s.minx)),Math.max(2,cz(s.maxz)-cz(s.minz)))}ctx.fillStyle='#dbf8e9';ctx.beginPath();ctx.arc(cx(eye.x),cz(eye.z),5,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#d4f6e8';ctx.beginPath();ctx.moveTo(cx(eye.x),cz(eye.z));ctx.lineTo(cx(eye.x)+Math.sin(player.yaw)*15,cz(eye.z)-Math.cos(player.yaw)*15);ctx.stroke()}
+function frame(now){const dt=Math.min(.04,(now-last)/1000||.016);last=now;try{gameStep(dt,now);render(now*.001)}catch(e){console.error('THRESHOLD frame error',e);if(!window._reported){window._reported=true;notify('Rendering error. Reload the game.',20)}}requestAnimationFrame(frame)}
+window.addEventListener('resize',resize);
+document.querySelectorAll('.mission').forEach(b=>b.addEventListener('click',()=>{state.mission=+b.dataset.mission;document.querySelectorAll('.mission').forEach(x=>x.classList.toggle('active',x===b));tone(460,.05,.03)}));
+document.querySelectorAll('.mode').forEach(b=>b.addEventListener('click',()=>{state.mode=b.dataset.mode;document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('active',x===b))}));
+$('start').addEventListener('click',start);$('again').addEventListener('click',start);$('toMenu').addEventListener('click',home);$('pauseBtn').addEventListener('click',pause);$('resume').addEventListener('click',resume);$('quit').addEventListener('click',home);
+window.addEventListener('keydown',e=>{let k=e.key.toLowerCase();if(['arrowup','arrowdown','arrowleft','arrowright',' ','tab'].includes(k))e.preventDefault();keys[k]=true;if(e.repeat)return;if(k==='escape'){if(state.phase==='play')pause();else if(state.phase==='pause')resume()}else if(state.phase==='play'){if(k==='e')toggleDoor();if(k==='q')command();if(k==='t')observe();if(k==='r')reload();if(k==='f')toggleFlash();if(k===' ')fire()}});
+window.addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=false});window.addEventListener('blur',()=>{for(let k in keys)delete keys[k];joy.x=joy.y=0});
+canvas.addEventListener('click',()=>{if(state.phase==='play'){if(document.pointerLockElement!==canvas&&matchMedia('(pointer:fine)').matches){canvas.requestPointerLock?.().catch(()=>{});return}fire()}});
+document.addEventListener('mousemove',e=>{if(state.phase==='play'&&document.pointerLockElement===canvas){player.yaw+=e.movementX*.0028;player.pitch=clamp(player.pitch-e.movementY*.0024,-1.12,1.12)}});
+document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();let a=b.dataset.action;if(a==='observe')observe();if(a==='command')command();if(a==='fire')fire();if(a==='door')toggleDoor();if(a==='reload')reload();if(a==='flash')toggleFlash();if(a==='pause')pause()}));
+const stick=$('stick'),knob=$('knob');let stickID=null,lookID=null,lastLook=null;
+function moveStick(e){const r=stick.getBoundingClientRect(),dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2,lim=r.width*.33;joy.x=clamp(dx/lim,-1,1);joy.y=clamp(dy/lim,-1,1);knob.style.transform=`translate(${joy.x*lim}px,${joy.y*lim}px)`}
+stick.addEventListener('pointerdown',e=>{e.preventDefault();stickID=e.pointerId;stick.setPointerCapture(e.pointerId);moveStick(e)});stick.addEventListener('pointermove',e=>{if(stickID===e.pointerId)moveStick(e)});function resetStick(e){if(stickID===e.pointerId){stickID=null;joy.x=joy.y=0;knob.style.transform='translate(0,0)'}}stick.addEventListener('pointerup',resetStick);stick.addEventListener('pointercancel',resetStick);
+const look=$('look');look.addEventListener('pointerdown',e=>{e.preventDefault();lookID=e.pointerId;lastLook=[e.clientX,e.clientY];look.setPointerCapture(e.pointerId)});look.addEventListener('pointermove',e=>{if(lookID!==e.pointerId||!lastLook||state.phase!=='play')return;player.yaw+=(e.clientX-lastLook[0])*.0059;player.pitch=clamp(player.pitch-(e.clientY-lastLook[1])*.0058,-1.12,1.12);lastLook=[e.clientX,e.clientY]});function stopLook(e){if(lookID===e.pointerId){lookID=null;lastLook=null}}look.addEventListener('pointerup',stopLook);look.addEventListener('pointercancel',stopLook);
+// Minimal public debugging interface supports deterministic gameplay checks.
+window.THRESHOLD={getState:()=>({phase:state.phase,mission:state.mission,score:state.score,resolved:state.actors.filter(a=>a.resolved).length,actorCount:state.actors.length,ammo:player.ammo,health:player.hp,position:[eye.x,eye.y,eye.z],webgl:!!gl}),start,home,observe,command,fire,toggleDoor};
+requestAnimationFrame(frame);
+</script></body></html>
